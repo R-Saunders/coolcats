@@ -10,11 +10,16 @@ const app = express();
 app.use(cors());
 app.use(bp.json());
 
-const cat = require("./models/cat")
+const Cat = require("./models/cat");
 mongoose.connect(process.env.DATABASE_URL);
 
 app.get("/", (request, response) => {
 	response.status(200).json("Hello World");
+});
+
+app.get("/cats", async (request, response) => {
+	const allCats = await Cat.find(request.query);
+	response.status(200).json(allCats);
 });
 
 app.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
