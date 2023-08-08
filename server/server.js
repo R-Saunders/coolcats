@@ -22,4 +22,13 @@ app.get("/cats", async (request, response) => {
 	response.status(200).json(allCats);
 });
 
+app.post("/cats", async (request, response) => {
+	try {
+		const newCat = await cat.create(req.body);
+		response.status(200).json(newCat);
+	} catch (error) {
+		response.status(500).json(error);
+	}
+});
+
 app.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
